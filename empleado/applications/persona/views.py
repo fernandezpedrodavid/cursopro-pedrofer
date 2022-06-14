@@ -44,6 +44,14 @@ class ListByAreaEmpleado(ListView):
         )
         return lista
     
+class ListaEmpleadosAdmin(ListView):
+    template_name = 'persona/lista_empleados.html'
+    paginate_by = 10
+    ordering = 'first_name'
+    context_object_name = 'empleados'
+    model = Empleado
+    
+    
 class ListEmpleadosByKword(ListView):
     """lista empleados por palabra clave"""
     template_name = 'persona/by_kword.html'
@@ -121,7 +129,7 @@ class EmpleadoUpdateView(UpdateView):
         'departamento',
         'habilidades',
     ]
-    success_url = reverse_lazy('persona_app:correcto')
+    success_url = reverse_lazy('persona_app:empleados_admin')
     
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
