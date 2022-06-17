@@ -14,6 +14,8 @@ from django.views.generic import (
 )
 #models
 from .models import Empleado
+#desde forms
+from .forms import EmpleadoForm
 
 class InicioView(TemplateView):
     template_name = 'inicio.html'
@@ -66,7 +68,7 @@ class ListEmpleadosByKword(ListView):
         return lista
     
 
-class ListEmpleadosByJob(ListView):
+class ListEmpleadosByJob(ListView): #tarea del curso
     """lista empleados por trabajo"""
     template_name = 'persona/by_job.html'
     queryset = Empleado.objects.filter(
@@ -102,14 +104,8 @@ class SuccessView(TemplateView):
 class EmpleadoCreateView(CreateView):
     model = Empleado
     template_name = "persona/add.html"
-    fields = [
-        'first_name',
-        'last_name',
-        'job',
-        'departamento',
-        'habilidades',
-    ]
-    success_url = reverse_lazy('persona_app:correcto')
+    form_class = EmpleadoForm
+    success_url = reverse_lazy('persona_app:empleados_admin')
     
     def form_valid(self, form):
         #logica del proceso 
@@ -149,7 +145,7 @@ class EmpleadoUpdateView(UpdateView):
 class EmpleadoDeleteView(DeleteView):
     model = Empleado
     template_name = "persona/delete.html"
-    success_url = reverse_lazy('persona_app:correcto')
+    success_url = reverse_lazy('persona_app:empleados_admin')
   
     
     
